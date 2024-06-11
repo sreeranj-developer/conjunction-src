@@ -1,0 +1,235 @@
+[gd_scene load_steps=17 format=3 uid="uid://dyddhkp3p5ut6"]
+
+[ext_resource type="Texture2D" uid="uid://c0ma5ocy61bur" path="res://assets/sprites/text1.png" id="1_3nrwh"]
+[ext_resource type="Shader" path="res://assets/effects/scroll.gdshader" id="1_78xhd"]
+[ext_resource type="Script" path="res://scripts/intro.gd" id="1_kxfco"]
+[ext_resource type="FontFile" uid="uid://c0awggw6usjlx" path="res://assets/fonts/Poppins-ExtraBold.ttf" id="2_0m4dy"]
+[ext_resource type="PackedScene" uid="uid://dlsjl6oufdufw" path="res://scenes/tansition.tscn" id="5_x3q1f"]
+[ext_resource type="Shader" path="res://assets/effects/transition.gdshader" id="6_6rtt4"]
+[ext_resource type="AudioStream" uid="uid://ddk4a8gdt4xnc" path="res://assets/sfx/ambience-sounds-8-15136.mp3" id="7_1cdm4"]
+[ext_resource type="Texture2D" uid="uid://bx0tp6ngakg3q" path="res://assets/sprites/loader-bg.png" id="8_ponce"]
+[ext_resource type="Texture2D" uid="uid://5j67w4dkngxa" path="res://assets/sprites/loader-out.png" id="9_486rk"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_q5ebt"]
+shader = ExtResource("1_78xhd")
+shader_parameter/Direction = Vector2(1, 5)
+
+[sub_resource type="LabelSettings" id="LabelSettings_chflx"]
+font = ExtResource("2_0m4dy")
+font_size = 81
+shadow_color = Color(0, 0, 0, 1)
+shadow_offset = Vector2(9.34, 9.34)
+
+[sub_resource type="Animation" id="Animation_fif3w"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Label:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 0)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Control:modulate")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_xubtm"]
+resource_name = "new_animation"
+length = 5.0
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Label:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1, 2, 3),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 0), Color(1, 1, 1, 1), Color(1, 1, 1, 1), Color(1, 1, 1, 0)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Control:modulate")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(3.5, 4.5),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 0), Color(1, 1, 1, 1)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_yvkum"]
+_data = {
+"RESET": SubResource("Animation_fif3w"),
+"new_animation": SubResource("Animation_xubtm")
+}
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_t4f3y"]
+shader = ExtResource("6_6rtt4")
+shader_parameter/in_color = Color(0.980392, 0.937255, 0.364706, 1)
+shader_parameter/out_color = Color(0.980392, 0.937255, 0.364706, 1)
+shader_parameter/in_out = 0.0
+shader_parameter/position = -1.5
+shader_parameter/size = Vector2(20, 20)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_i3qo1"]
+bg_color = Color(0.215902, 0.215902, 0.215902, 1)
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
+shadow_size = 85
+
+[node name="intro" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_kxfco")
+
+[node name="ColorRect" type="ColorRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.114897, 0.114897, 0.114897, 1)
+
+[node name="bg" type="TextureRect" parent="."]
+material = SubResource("ShaderMaterial_q5ebt")
+layout_mode = 0
+offset_right = 3200.0
+offset_bottom = 1800.0
+scale = Vector2(0.36, 0.36)
+texture = ExtResource("1_3nrwh")
+stretch_mode = 1
+
+[node name="Label" type="Label" parent="."]
+modulate = Color(1, 1, 1, 0)
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -465.0
+offset_top = -57.5
+offset_right = 465.0
+offset_bottom = 57.5
+grow_horizontal = 2
+grow_vertical = 2
+text = "INNERSPROUTSTUDIOS"
+label_settings = SubResource("LabelSettings_chflx")
+
+[node name="Control" type="Control" parent="."]
+modulate = Color(1, 1, 1, 0)
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -485.5
+offset_top = -42.0
+offset_right = 917.5
+offset_bottom = 90.0
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(0.7, 0.7)
+
+[node name="TextureRect2" type="TextureRect" parent="Control"]
+modulate = Color(0, 0, 0, 1)
+layout_mode = 0
+offset_left = 14.0
+offset_top = 16.0
+offset_right = 1403.0
+offset_bottom = 132.0
+texture = ExtResource("1_3nrwh")
+
+[node name="TextureRect" type="TextureRect" parent="Control"]
+layout_mode = 0
+offset_right = 1389.0
+offset_bottom = 116.0
+texture = ExtResource("1_3nrwh")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_yvkum")
+}
+
+[node name="tansition" parent="." instance=ExtResource("5_x3q1f")]
+visible = false
+layout_mode = 1
+
+[node name="ColorRect" parent="tansition" index="0"]
+material = SubResource("ShaderMaterial_t4f3y")
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("7_1cdm4")
+autoplay = true
+
+[node name="HTTPRequest" type="HTTPRequest" parent="."]
+download_chunk_size = 165536
+
+[node name="Label2" type="Label" parent="."]
+visible = false
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.316
+anchor_top = 0.705
+anchor_right = 0.684
+anchor_bottom = 0.741
+offset_left = -0.0320129
+offset_top = 0.159973
+offset_right = 19.032
+offset_bottom = 6.83197
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_styles/normal = SubResource("StyleBoxFlat_i3qo1")
+text = "sorry can't connect to server. please check later :("
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="TextureProgressBar" type="TextureProgressBar" parent="."]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.467
+anchor_top = 0.441
+anchor_right = 0.533
+anchor_bottom = 0.56
+offset_left = 0.0160522
+offset_top = 0.232025
+offset_right = 304.984
+offset_bottom = 304.12
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(0.2, 0.2)
+fill_mode = 4
+texture_under = ExtResource("8_ponce")
+texture_progress = ExtResource("9_486rk")
+
+[connection signal="animation_finished" from="AnimationPlayer" to="." method="_on_animation_player_animation_finished"]
+[connection signal="animation_finished" from="tansition/AnimationPlayer" to="." method="_on_animation_player_animation_finished"]
+[connection signal="request_completed" from="HTTPRequest" to="." method="_on_http_request_request_completed"]
+
+[editable path="tansition"]

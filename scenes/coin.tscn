@@ -1,0 +1,109 @@
+[gd_scene load_steps=11 format=3 uid="uid://bqkyeh2xl6wx5"]
+
+[ext_resource type="Script" path="res://scripts/coin.gd" id="1_1a7vw"]
+[ext_resource type="Texture2D" uid="uid://ccd8srtxxicsq" path="res://assets/sprites/coin.png" id="1_6tqjt"]
+[ext_resource type="Texture2D" uid="uid://c5uddkn2m426x" path="res://assets/sprites/box.png" id="3_5p3vk"]
+[ext_resource type="AudioStream" uid="uid://cfokv7qgnr6r1" path="res://assets/sfx/coin-and-money-bag-3-185264.mp3" id="4_4hd0e"]
+
+[sub_resource type="Shader" id="Shader_1ioyt"]
+code = "shader_type canvas_item;
+
+uniform float amplitude = 100.0;
+uniform float speed = 5.0;
+uniform bool play = false;
+void vertex() {
+	if (play){
+		VERTEX.y += amplitude * sin(speed * TIME);
+	}
+}
+
+"
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_togjb"]
+shader = SubResource("Shader_1ioyt")
+shader_parameter/amplitude = 100.0
+shader_parameter/speed = 5.0
+shader_parameter/play = true
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_q52i6"]
+radius = 123.939
+
+[sub_resource type="Animation" id="Animation_hb0m1"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 1)]
+}
+
+[sub_resource type="Animation" id="Animation_3njpm"]
+resource_name = "fade"
+length = 0.5
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.3),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 1), Color(1, 1, 1, 0)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_drkgf"]
+_data = {
+"RESET": SubResource("Animation_hb0m1"),
+"fade": SubResource("Animation_3njpm")
+}
+
+[node name="coin" type="Node2D"]
+script = ExtResource("1_1a7vw")
+
+[node name="Area2D" type="Area2D" parent="."]
+collision_layer = 3
+collision_mask = 3
+
+[node name="Sprite2D" type="Sprite2D" parent="Area2D"]
+material = SubResource("ShaderMaterial_togjb")
+texture = ExtResource("1_6tqjt")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+shape = SubResource("CircleShape2D_q52i6")
+
+[node name="CPUParticles2D" type="CPUParticles2D" parent="Area2D"]
+emitting = false
+amount = 50
+explosiveness = 1.0
+texture = ExtResource("3_5p3vk")
+emission_shape = 1
+emission_sphere_radius = 43.66
+direction = Vector2(0, 0)
+spread = 180.0
+initial_velocity_min = 188.03
+initial_velocity_max = 188.03
+radial_accel_min = 71.79
+radial_accel_max = 71.79
+scale_amount_min = 0.01
+scale_amount_max = 0.05
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Area2D"]
+libraries = {
+"": SubResource("AnimationLibrary_drkgf")
+}
+
+[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("4_4hd0e")
+volume_db = -15.0
+pitch_scale = 3.0
+
+[connection signal="area_shape_entered" from="Area2D" to="." method="_on_area_2d_area_shape_entered"]
+[connection signal="animation_finished" from="Area2D/AnimationPlayer" to="." method="_on_animation_player_animation_finished"]

@@ -1,0 +1,9 @@
+[gd_resource type="AudioBusLayout" load_steps=2 format=3 uid="uid://da74tuy54sgn3"]
+
+[sub_resource type="AudioEffectReverb" id="AudioEffectReverb_kj6va"]
+resource_name = "Reverb"
+
+[resource]
+bus/0/volume_db = 0.0672607
+bus/0/effect/0/effect = SubResource("AudioEffectReverb_kj6va")
+bus/0/effect/0/enabled = false

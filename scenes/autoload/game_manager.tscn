@@ -1,0 +1,109 @@
+[gd_scene load_steps=11 format=3 uid="uid://byfw6582hurcb"]
+
+[ext_resource type="Script" path="res://scenes/autoload/game_manager.gd" id="1_u4sqt"]
+[ext_resource type="AudioStream" uid="uid://cf7t8bb1udhlb" path="res://assets/music/short-chill-music-8561.wav" id="2_daq3q"]
+[ext_resource type="AudioStream" uid="uid://cjql5vd4g8pxg" path="res://assets/sfx/the-ambience-room-tone-139064.mp3" id="3_qmdx2"]
+[ext_resource type="AudioStream" uid="uid://ddk4a8gdt4xnc" path="res://assets/sfx/ambience-sounds-8-15136.mp3" id="4_mbibk"]
+[ext_resource type="FontFile" uid="uid://gamrf0p3qbok" path="res://assets/fonts/JetBrainsMono-Light.ttf" id="5_hfjvl"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_axf4h"]
+bg_color = Color(0.0523193, 0.088848, 0.281102, 0.286275)
+corner_radius_top_left = 20
+corner_radius_top_right = 20
+corner_radius_bottom_right = 20
+corner_radius_bottom_left = 20
+
+[sub_resource type="LabelSettings" id="LabelSettings_ox7gn"]
+font = ExtResource("5_hfjvl")
+
+[sub_resource type="Animation" id="Animation_n337d"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("CanvasLayer/Control/Label:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 1)]
+}
+
+[sub_resource type="Animation" id="Animation_nsqx4"]
+resource_name = "fade"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("CanvasLayer/Control/Label:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 1), Color(1, 1, 1, 0)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_hbsgc"]
+_data = {
+"RESET": SubResource("Animation_n337d"),
+"fade": SubResource("Animation_nsqx4")
+}
+
+[node name="game_manager" type="Node"]
+script = ExtResource("1_u4sqt")
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("2_daq3q")
+volume_db = -5.0
+
+[node name="AudioStreamPlayer2" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("3_qmdx2")
+
+[node name="AudioStreamPlayer3" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("4_mbibk")
+
+[node name="Timer" type="Timer" parent="."]
+autostart = true
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+visible = false
+
+[node name="Control" type="Control" parent="CanvasLayer"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Label" type="Label" parent="CanvasLayer/Control"]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -87.0
+offset_top = -144.0
+offset_right = 87.0
+offset_bottom = -48.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_styles/normal = SubResource("StyleBoxFlat_axf4h")
+text = "🕹️ < > to move
+🔥  __ to jump
+ 💀 r to restart"
+label_settings = SubResource("LabelSettings_ox7gn")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_hbsgc")
+}
+
+[connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]
+[connection signal="animation_finished" from="AnimationPlayer" to="." method="_on_animation_player_animation_finished"]

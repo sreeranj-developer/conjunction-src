@@ -1,0 +1,7 @@
+[gd_scene format=3 uid="uid://ctxjjllienyif"]
+
+[node name="Timer" type="Label"]
+offset_right = 40.0
+offset_bottom = 23.0
+
+[node name="Timer" type="Timer" parent="."]

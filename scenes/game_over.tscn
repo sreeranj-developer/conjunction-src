@@ -1,0 +1,269 @@
+[gd_scene load_steps=20 format=3 uid="uid://fhoogivq5w2e"]
+
+[ext_resource type="FontFile" uid="uid://c0awggw6usjlx" path="res://assets/fonts/Poppins-ExtraBold.ttf" id="1_bb6k8"]
+[ext_resource type="FontFile" uid="uid://dicbfu4vn5g5v" path="res://assets/fonts/Poppins-Bold.ttf" id="1_ecyce"]
+[ext_resource type="Script" path="res://scripts/game_over.gd" id="1_lr6lg"]
+[ext_resource type="Texture2D" uid="uid://c5uddkn2m426x" path="res://assets/sprites/box.png" id="2_udq78"]
+[ext_resource type="PackedScene" uid="uid://dlsjl6oufdufw" path="res://scenes/tansition.tscn" id="4_6yvn8"]
+[ext_resource type="Texture2D" uid="uid://dsk5fw3o3svch" path="res://assets/sprites/icon_monochrome_dark.png" id="4_h1qyp"]
+[ext_resource type="Shader" path="res://assets/effects/transition.gdshader" id="5_jpl3i"]
+
+[sub_resource type="Curve" id="Curve_0bnyv"]
+min_value = -360.0
+max_value = 360.0
+_data = [Vector2(0.00465117, 193.846), 0.0, 0.0, 0, 0, Vector2(0.995349, 360), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="Curve" id="Curve_p36fd"]
+_data = [Vector2(0, 0.0219779), 0.0, 0.0, 0, 0, Vector2(0.195349, 0.285714), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="LabelSettings" id="LabelSettings_o0vgn"]
+font = ExtResource("1_bb6k8")
+font_size = 121
+shadow_size = 16
+shadow_color = Color(0, 0, 0, 1)
+shadow_offset = Vector2(9.585, 12.26)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_6wywe"]
+bg_color = Color(0.133196, 0.133196, 0.133196, 1)
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
+
+[sub_resource type="LabelSettings" id="LabelSettings_m4jrp"]
+font = ExtResource("1_ecyce")
+font_size = 17
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_vj1br"]
+bg_color = Color(0.152941, 0.152941, 0.152941, 0.372549)
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
+shadow_color = Color(0, 0, 0, 0.290196)
+shadow_size = 10
+shadow_offset = Vector2(8.515, 12.095)
+
+[sub_resource type="LabelSettings" id="LabelSettings_6356t"]
+font = ExtResource("1_ecyce")
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_xskqe"]
+bg_color = Color(0.0705882, 0.0705882, 0.0705882, 1)
+corner_radius_top_left = 50
+corner_radius_top_right = 50
+corner_radius_bottom_right = 100
+corner_radius_bottom_left = 100
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_adc7v"]
+bg_color = Color(0.6, 0.6, 0.6, 0)
+border_width_left = 5
+border_width_top = 5
+border_width_right = 5
+border_width_bottom = 5
+corner_radius_top_left = 50
+corner_radius_top_right = 50
+corner_radius_bottom_right = 100
+corner_radius_bottom_left = 100
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_2ht7c"]
+bg_color = Color(1, 1, 1, 1)
+border_width_left = 5
+border_width_top = 5
+border_width_right = 5
+border_width_bottom = 5
+corner_radius_top_left = 50
+corner_radius_top_right = 50
+corner_radius_bottom_right = 100
+corner_radius_bottom_left = 100
+shadow_color = Color(0, 0, 0, 1)
+shadow_size = 5
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_g7dyg"]
+bg_color = Color(0.6, 0.6, 0.6, 0)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_6wn8c"]
+shader = ExtResource("5_jpl3i")
+shader_parameter/in_color = Color(0.156863, 0.156863, 0.156863, 1)
+shader_parameter/out_color = Color(0.158472, 0.158472, 0.158472, 1)
+shader_parameter/in_out = 0.0
+shader_parameter/position = -1.5
+shader_parameter/size = Vector2(20, 20)
+
+[node name="GameOver" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_lr6lg")
+
+[node name="ColorRect" type="ColorRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.114897, 0.114897, 0.114897, 1)
+
+[node name="CPUParticles2D2" type="CPUParticles2D" parent="."]
+position = Vector2(560, 312)
+amount = 10
+preprocess = 5.0
+speed_scale = 0.1
+randomness = 1.0
+texture = ExtResource("2_udq78")
+emission_shape = 3
+emission_rect_extents = Vector2(500, 200)
+direction = Vector2(0, 0)
+gravity = Vector2(0, 0)
+orbit_velocity_min = 0.1
+orbit_velocity_max = 0.1
+angle_min = 0.1
+angle_max = 5.0
+angle_curve = SubResource("Curve_0bnyv")
+scale_amount_min = 0.5
+scale_amount_curve = SubResource("Curve_p36fd")
+color = Color(0.136826, 0.136826, 0.136826, 1)
+
+[node name="Label" type="Label" parent="."]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -576.0
+offset_top = 5.00003
+offset_right = 584.0
+offset_bottom = 280.0
+grow_horizontal = 2
+text = "GAME OVER"
+label_settings = SubResource("LabelSettings_o0vgn")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Panel2" type="Panel" parent="."]
+layout_mode = 0
+offset_left = 830.0
+offset_top = 567.0
+offset_right = 1119.0
+offset_bottom = 629.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_6wywe")
+
+[node name="TextureRect" type="TextureRect" parent="Panel2"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.757
+anchor_top = 0.904
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -200.904
+offset_top = -48.4318
+offset_right = 757.0
+offset_bottom = 970.0
+grow_horizontal = 0
+grow_vertical = 0
+scale = Vector2(0.04, 0.04)
+texture = ExtResource("4_h1qyp")
+
+[node name="Label" type="Label" parent="Panel2"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 1.27
+anchor_top = 0.293
+anchor_right = 5.121
+anchor_bottom = 0.733
+offset_left = -302.03
+offset_top = 1.834
+offset_right = -1205.97
+offset_bottom = -1.446
+text = "made with godotengine"
+label_settings = SubResource("LabelSettings_m4jrp")
+
+[node name="Panel" type="Panel" parent="."]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.336
+anchor_top = 0.406
+anchor_right = 0.664
+anchor_bottom = 0.718
+offset_left = -0.572021
+offset_top = -0.0880127
+offset_right = 0.57196
+offset_bottom = -0.264038
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_vj1br")
+
+[node name="Label2" type="Label" parent="Panel"]
+modulate = Color(0.980392, 0.937255, 0.364706, 1)
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.321
+anchor_top = 0.119
+anchor_right = 0.679
+anchor_bottom = 0.233
+offset_left = -5.65903
+offset_top = 31.962
+offset_right = 5.659
+offset_bottom = 31.934
+grow_horizontal = 2
+text = "Time taken: 00:00"
+label_settings = SubResource("LabelSettings_6356t")
+
+[node name="Label3" type="Label" parent="Panel"]
+modulate = Color(1, 0, 0.301961, 1)
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.321
+anchor_top = 0.3
+anchor_right = 0.679
+anchor_bottom = 0.414
+offset_left = -0.158997
+offset_top = 32.035
+offset_right = 0.158997
+offset_bottom = 32.007
+grow_horizontal = 2
+text = "Deaths: 0"
+label_settings = SubResource("LabelSettings_6356t")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Button" type="Button" parent="Panel"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.43
+anchor_top = 0.619
+anchor_right = 0.591
+anchor_bottom = 0.876
+offset_left = -19.47
+offset_top = 0.962029
+offset_right = 118.511
+offset_bottom = 53.048
+grow_horizontal = 2
+grow_vertical = 0
+scale = Vector2(0.5, 0.5)
+theme_override_colors/font_pressed_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("1_ecyce")
+theme_override_font_sizes/font_size = 32
+theme_override_styles/normal = SubResource("StyleBoxFlat_xskqe")
+theme_override_styles/hover = SubResource("StyleBoxFlat_adc7v")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_2ht7c")
+theme_override_styles/focus = SubResource("StyleBoxFlat_g7dyg")
+text = "REPLAY"
+icon_alignment = 1
+
+[node name="tansition" parent="." instance=ExtResource("4_6yvn8")]
+layout_mode = 1
+
+[node name="ColorRect" parent="tansition" index="0"]
+material = SubResource("ShaderMaterial_6wn8c")
+
+[node name="AnimationPlayer" parent="tansition" index="1"]
+autoplay = "in"
+
+[connection signal="pressed" from="Panel/Button" to="." method="_on_button_pressed"]
+
+[editable path="tansition"]

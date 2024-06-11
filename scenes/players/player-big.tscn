@@ -1,0 +1,100 @@
+[gd_scene load_steps=11 format=3 uid="uid://brdpmi4sj07w0"]
+
+[ext_resource type="Script" path="res://scenes/players/player-common.gd" id="1_0jabk"]
+[ext_resource type="Texture2D" uid="uid://4vva4swnkq6c" path="res://assets/sprites/player.png" id="2_1eg6n"]
+[ext_resource type="Texture2D" uid="uid://c5uddkn2m426x" path="res://assets/sprites/box.png" id="3_xb1rs"]
+[ext_resource type="AudioStream" uid="uid://c1r7hwmxr5pv6" path="res://assets/sfx/cartoon-jump-6462.mp3" id="4_7fxf4"]
+[ext_resource type="Texture2D" uid="uid://chlclbpfxe3mg" path="res://assets/sprites/light.png" id="5_hxwmv"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_vowsp"]
+size = Vector2(53, 53)
+
+[sub_resource type="SegmentShape2D" id="SegmentShape2D_o3yno"]
+a = Vector2(-24, -10)
+b = Vector2(24, -10)
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_hnjyb"]
+radius = 27.0
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_d8ucj"]
+bg_color = Color(0.129412, 0.129412, 0.129412, 0)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_jp0gw"]
+bg_color = Color(0.980392, 0.937255, 0.364706, 1)
+shadow_color = Color(0, 0, 0, 1)
+shadow_size = 1
+shadow_offset = Vector2(2, -2.675)
+
+[node name="player-big" type="CharacterBody2D" groups=["player", "player-b"]]
+scale = Vector2(2, 2)
+script = ExtResource("1_0jabk")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+modulate = Color(0.980392, 0.937255, 0.364706, 1)
+scale = Vector2(0.2, 0.2)
+texture = ExtResource("2_1eg6n")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_vowsp")
+
+[node name="ShapeCast2D" type="ShapeCast2D" parent="."]
+shape = SubResource("SegmentShape2D_o3yno")
+
+[node name="collector" type="Area2D" parent="." groups=["collector"]]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="collector"]
+shape = SubResource("CircleShape2D_hnjyb")
+
+[node name="CPUParticles2D" type="CPUParticles2D" parent="."]
+emitting = false
+amount = 50
+explosiveness = 1.0
+texture = ExtResource("3_xb1rs")
+emission_shape = 1
+emission_sphere_radius = 43.66
+direction = Vector2(0, 0)
+spread = 180.0
+initial_velocity_min = 188.03
+initial_velocity_max = 188.03
+radial_accel_min = 71.79
+radial_accel_max = 71.79
+scale_amount_min = 0.01
+scale_amount_max = 0.05
+color = Color(0.980392, 0.937255, 0.364706, 1)
+
+[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("4_7fxf4")
+volume_db = -15.0
+
+[node name="PointLight2D" type="PointLight2D" parent="."]
+color = Color(0.980392, 0.937255, 0.364706, 1)
+energy = 0.5
+range_layer_min = -1
+range_layer_max = 1
+texture = ExtResource("5_hxwmv")
+texture_scale = 0.5
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="Control" type="Control" parent="CanvasLayer"]
+layout_mode = 3
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 0
+
+[node name="ProgressBar" type="ProgressBar" parent="CanvasLayer/Control"]
+layout_mode = 1
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -10.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_styles/background = SubResource("StyleBoxFlat_d8ucj")
+theme_override_styles/fill = SubResource("StyleBoxFlat_jp0gw")
+value = 41.37
+show_percentage = false
