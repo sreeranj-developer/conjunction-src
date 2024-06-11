@@ -1,2 +1,2 @@
-# conjunction-server
+# conjunction
 CONJUNCTION-SERVER
